@@ -1,0 +1,6 @@
+mutation CreateItem($name: String!) {
+  createItem(name: $name) {
+    name
+    id
+  }
+}

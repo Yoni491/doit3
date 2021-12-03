@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "all",
+      "dependsOn": ["watch", "server", "web"]
+    },
+    {
+      "type": "shell",
+      "label": "server",
+      "command": "cd .\\server; yarn dev"
+    },
+    {
+      "type": "shell",
+      "label": "watch",
+      "command": "cd .\\server; yarn watch"
+    },
+    {
+      "type": "shell",
+      "label": "web",
+      "command": "cd .\\web; yarn dev"
+    }
+  ]
+}
