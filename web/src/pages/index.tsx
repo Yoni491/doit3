@@ -8,7 +8,6 @@ import { InputField } from "../components/InputField";
 import { Layout } from "../components/Layout";
 import { useCreateItemMutation } from "../generated/graphql";
 import { createUrqlClient } from "../utils/creatUrqlClient";
-import { useIsAuth } from "../utils/useIsAuth";
 
 const createItem: React.FC<{}> = ({}) => {
   const router = useRouter();
@@ -28,7 +27,7 @@ const createItem: React.FC<{}> = ({}) => {
           <Form>
             <Box mt={4}>
               <InputField
-                name="text"
+                name="name"
                 placeholder="text..."
                 label="Enter text:"
                 textarea
