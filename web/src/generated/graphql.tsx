@@ -41,18 +41,35 @@ export type CreateItemMutationVariables = Exact<{
 }>;
 
 
-export type CreateItemMutation = { __typename?: 'Mutation', createItem: { __typename?: 'Item', name: string, id: string } };
+export type CreateItemMutation = { __typename?: 'Mutation', createItem: { __typename?: 'Item', id: string, name: string } };
+
+export type ItemsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ItemsQuery = { __typename?: 'Query', items: Array<{ __typename?: 'Item', id: string, name: string }> };
 
 
 export const CreateItemDocument = gql`
     mutation CreateItem($name: String!) {
   createItem(name: $name) {
-    name
     id
+    name
   }
 }
     `;
 
 export function useCreateItemMutation() {
   return Urql.useMutation<CreateItemMutation, CreateItemMutationVariables>(CreateItemDocument);
+};
+export const ItemsDocument = gql`
+    query Items {
+  items {
+    id
+    name
+  }
+}
+    `;
+
+export function useItemsQuery(options: Omit<Urql.UseQueryArgs<ItemsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<ItemsQuery>({ query: ItemsDocument, ...options });
 };
