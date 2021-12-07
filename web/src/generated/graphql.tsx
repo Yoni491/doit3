@@ -16,6 +16,7 @@ export type Scalars = {
 
 export type Item = {
   __typename?: 'Item';
+  createdAt: Scalars['String'];
   id: Scalars['ID'];
   name: Scalars['String'];
 };
@@ -23,11 +24,17 @@ export type Item = {
 export type Mutation = {
   __typename?: 'Mutation';
   createItem: Item;
+  deleteItem?: Maybe<Scalars['Boolean']>;
 };
 
 
 export type MutationCreateItemArgs = {
   name: Scalars['String'];
+};
+
+
+export type MutationDeleteItemArgs = {
+  id: Scalars['String'];
 };
 
 export type Query = {
@@ -42,6 +49,13 @@ export type CreateItemMutationVariables = Exact<{
 
 
 export type CreateItemMutation = { __typename?: 'Mutation', createItem: { __typename?: 'Item', id: string, name: string } };
+
+export type DeleteItemMutationVariables = Exact<{
+  deleteItemId: Scalars['String'];
+}>;
+
+
+export type DeleteItemMutation = { __typename?: 'Mutation', deleteItem?: boolean | null | undefined };
 
 export type ItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -60,6 +74,15 @@ export const CreateItemDocument = gql`
 
 export function useCreateItemMutation() {
   return Urql.useMutation<CreateItemMutation, CreateItemMutationVariables>(CreateItemDocument);
+};
+export const DeleteItemDocument = gql`
+    mutation DeleteItem($deleteItemId: String!) {
+  deleteItem(id: $deleteItemId)
+}
+    `;
+
+export function useDeleteItemMutation() {
+  return Urql.useMutation<DeleteItemMutation, DeleteItemMutationVariables>(DeleteItemDocument);
 };
 export const ItemsDocument = gql`
     query Items {

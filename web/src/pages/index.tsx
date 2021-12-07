@@ -1,9 +1,11 @@
 import { Box, Flex, Heading, Stack, Text } from "@chakra-ui/layout";
-import { Button } from "@chakra-ui/react";
+import { Button, ScaleFade } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
+import { motion } from "framer-motion";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/dist/client/router";
 import React from "react";
+import { DeleteItemButton } from "../components/DeleteItemButton";
 import { InputField } from "../components/InputField";
 import { Layout } from "../components/Layout";
 import { useCreateItemMutation, useItemsQuery } from "../generated/graphql";
@@ -13,6 +15,8 @@ const createItem: React.FC<{}> = ({}) => {
   const router = useRouter();
   const [, createItem] = useCreateItemMutation();
   const [{ data, fetching }] = useItemsQuery();
+  const MotionFlex = motion(Flex);
+
   if (!fetching && !data) {
     return <div>loading data failed</div>;
   }
@@ -53,16 +57,33 @@ const createItem: React.FC<{}> = ({}) => {
         <div>loading...</div>
       ) : (
         <Stack spacing={8} wordBreak={"break-word"}>
-          {data!.items.map((p) => (
-            <Flex key={p.id} p={5} shadow="md" borderWidth="1px">
-              <Box>
-                <Flex>
-                  <Heading fontSize="s"> {p.id}</Heading>
-                </Flex>
-                <Text fontSize="xl">{p.name}</Text>
-              </Box>
-            </Flex>
-          ))}
+          {data!.items.map((p) =>
+            !p ? null : (
+              <MotionFlex
+                py={3}
+                px={3}
+                borderRadius="md"
+                bg="teal.50"
+                w="full"
+                borderLeft="2px"
+                borderColor="teal.500"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0 }}
+                layout
+              >
+                <Box>
+                  <Flex>
+                    <Heading fontSize="s"> {p.id}</Heading>
+                  </Flex>
+                  <Text fontSize="xl">{p.name}</Text>
+                </Box>
+                <Box ml={"auto"}>
+                  <DeleteItemButton deleteItemId={p.id} />
+                </Box>
+              </MotionFlex>
+            )
+          )}
         </Stack>
       )}
     </Layout>
