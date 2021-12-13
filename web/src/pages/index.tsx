@@ -1,5 +1,5 @@
 import { Box, Flex, Heading, Stack, Text } from "@chakra-ui/layout";
-import { Button, ScaleFade } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import { withUrqlClient } from "next-urql";

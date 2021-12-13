@@ -1,11 +1,9 @@
 import { ApolloServer } from "apollo-server-express";
-//import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
-import { resolvers } from "./resolvers";
+import { resolvers } from "./resolvers/resolvers";
 import { typeDefs } from "./typeDefs";
 import corsMiddleware from "cors";
-//import session from "express-session";
 
 const startServer = async () => {
   const apolloserver = new ApolloServer({
@@ -14,12 +12,11 @@ const startServer = async () => {
     context: ({ req, res }: any) => ({ req, res }),
   });
 
-  await mongoose.connect("mongodb://localhost:27017/test3", {
+  await mongoose.connect("mongodb://localhost:27017/DoiT", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
   mongoose.set("debug", true);
-
   const app = express();
 
   app.use(corsMiddleware({ origin: "*" }));
