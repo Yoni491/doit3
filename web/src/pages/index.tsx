@@ -1,12 +1,12 @@
-import { Box, Flex, Heading, Stack, Text } from "@chakra-ui/layout";
+import { Box, Flex, Stack } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/dist/client/router";
 import React from "react";
-import { DeleteItemButton } from "../components/DeleteItemButton";
 import { InputField } from "../components/InputField";
+import { Item } from "../components/Item";
 import { Layout } from "../components/Layout";
 import { useCreateItemMutation, useItemsQuery } from "../generated/graphql";
 import { createUrqlClient } from "../utils/creatUrqlClient";
@@ -59,29 +59,7 @@ const createItem: React.FC<{}> = ({}) => {
         <Stack spacing={8} wordBreak={"break-word"}>
           {data!.items.map((p) =>
             !p ? null : (
-              <MotionFlex
-                py={3}
-                px={3}
-                borderRadius="md"
-                bg="teal.50"
-                w="full"
-                borderLeft="2px"
-                borderColor="teal.500"
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0 }}
-                layout
-              >
-                <Box>
-                  <Flex>
-                    <Heading fontSize="s"> {p.id}</Heading>
-                  </Flex>
-                  <Text fontSize="xl">{p.name}</Text>
-                </Box>
-                <Box ml={"auto"}>
-                  <DeleteItemButton deleteItemId={p.id} />
-                </Box>
-              </MotionFlex>
+              <Item id={p.id} name={p.name} fetching={fetching}></Item>
             )
           )}
         </Stack>
