@@ -1,12 +1,4 @@
-import {
-  Stack,
-  ScaleFade,
-  Box,
-  Flex,
-  Heading,
-  useDisclosure,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import React from "react";
 import { DeleteItemButton } from "./DeleteItemButton";
@@ -14,9 +6,8 @@ import { DeleteItemButton } from "./DeleteItemButton";
 interface ItemProps {
   id: string;
   name: string;
-  fetching: boolean;
 }
-export const Item: React.FC<ItemProps> = ({ id, name, fetching }) => {
+export const Item: React.FC<ItemProps> = ({ id, name }) => {
   const MotionFlex = motion(Flex);
   return (
     <Box
